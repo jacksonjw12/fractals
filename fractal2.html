@@ -1,0 +1,53 @@
+<html>
+<body>
+<canvas id="Canvas">
+<style>
+body {
+	margin:0;
+}
+canvas {
+	margin:0;
+}
+</style>
+
+<script>
+	var canvas = {"width":window.innerWidth,"height":window.innerHeight}
+	canvas.element = document.getElementById("Canvas");
+	canvas.element.height = canvas.height
+	canvas.element.width = canvas.width
+	canvas.context = canvas.element.getContext("2d");
+	canvas.context.strokeStyle = "black"
+	function drawFractal(size,x,y,angle,clockwise){
+		console.log(y)
+		var xF = x+size*Math.cos(angle);
+
+		var yF = y-size*Math.sin(angle);
+		canvas.context.beginPath();
+		canvas.context.moveTo(x,y);
+
+		canvas.context.lineTo(xF,yF);
+		canvas.context.stroke();
+		if(size > 5){
+			if(clockwise){
+				setTimeout(function(){drawFractal(size*8/10,xF,yF,angle+Math.PI/4.5,!clockwise)},400);
+				setTimeout(function(){drawFractal(size*7/10,xF,yF,angle-Math.PI/4,clockwise)},400);
+
+			}
+			else{
+				setTimeout(function(){drawFractal(size*7/10,xF,yF,angle-Math.PI/4.5,!clockwise)},400);
+				setTimeout(function(){drawFractal(size*8/10,xF,yF,angle+Math.PI/4,clockwise)},400);
+
+			}
+			
+		}
+
+
+	}
+	
+	
+	drawFractal(150,canvas.width/2,canvas.height-100,Math.PI/2,false);
+
+</script>
+
+</body>
+</html>
